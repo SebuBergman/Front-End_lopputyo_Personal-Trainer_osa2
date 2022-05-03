@@ -1,6 +1,6 @@
-import TrainingsPage from './TrainingsPage';
-import CustomersPage from './CustomersPage';
-import Home from './Home';
+import TrainingsPage from './components/TrainingsPage';
+import CustomersPage from './components/CustomersPage';
+import Home from './components/Home';
 import React, { useState } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
