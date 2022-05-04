@@ -7,8 +7,11 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import DatePicker from '@mui/lab/DatePicker';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
-function Addtraining({ addTraining }) {
+function Addtraining({ addTraining, params }) {
     const [open, setOpen] = React.useState(false);
     const [training, setTraining] = React.useState({
         date: '',
@@ -16,9 +19,17 @@ function Addtraining({ addTraining }) {
         duration: '',
         customers: ''
     })
+    
+    /*const [customername, setCustomername] = React.useState({
+        customers: params.data.customer.firstname
+    })*/
 
     const handleClickOpen = () => {
         setOpen(true);
+        setTraining({
+            customers: params.data.firstname + " " + params.data.lastname
+        })
+        console.log(params);
     }
 
     const handleClose = () => {
@@ -45,17 +56,20 @@ function Addtraining({ addTraining }) {
                 <AddIcon />
             </IconButton>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>New Training</DialogTitle>
+                <DialogTitle>New Training ({training.customers})</DialogTitle>
                 <DialogContent>
-                    <TextField
-                        name="date"
-                        value={training.date}
-                        onChange={inputChanged}
-                        margin="dense"
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DatePicker
                         label="Date"
-                        fullWidth
-                        variant="standard"
+                        value={training.date}
+                        inputFormat="dd.MM.yyyy"
+                        mask="__.__.____"
+                        onChange={(newValue) => {
+                            setTraining({...training, date: newValue});
+                        }}
+                        renderInput={(params) => <TextField variant='standard' {...params} />}
                     />
+                    </LocalizationProvider>
                     <TextField
                         name="activity"
                         value={training.activity}

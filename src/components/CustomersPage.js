@@ -54,6 +54,7 @@ function CustomersPage() {
 
     const addTraining = training => {
         fetch("https://customerrest.herokuapp.com/api/training")
+        
     }
 
     const updateCustomer = (updatedCustomer, link) => {

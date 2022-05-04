@@ -31,14 +31,13 @@ function TrainingsPage() {
     }
 
     const customerName = (params) => {
-        console.log(params);
         return params.data.customer.firstname + " " + params.data.customer.lastname;
     };
 
     const columns = [
-        { field: 'date', sortable: true, filter: true, valueFormatter: params => dayjs(params.value).format("HH:mm, DD-MMM-YY") },
-        { field: 'duration', sortable: true, filter: true },
         { field: 'activity', sortable: true, filter: true },
+        { field: 'duration', sortable: true, filter: true },
+        { field: 'date', sortable: true, filter: true, valueFormatter: params => dayjs(params.value).format("DD.MM.YY, HH:mm") },
         {
             headerName: 'Customer',
             valueGetter: customerName,

@@ -85,7 +85,7 @@ function EditCustomer({ updateCustomer, params}) {
                     value={customer.phone}
                     onChange={inputChanged}
                     margin="dense"
-                    label="=Phone"
+                    label="Phone"
                     fullWidth
                     variant="standard"
                     />
