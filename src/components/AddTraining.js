@@ -7,9 +7,10 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import DatePicker from '@mui/lab/DatePicker';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import Stack from '@mui/material/Stack';
 
 function Addtraining({ addTraining, params }) {
     const [open, setOpen] = React.useState(false);
@@ -58,20 +59,19 @@ function Addtraining({ addTraining, params }) {
             <IconButton onClick={handleClickOpen}>
                 <AddIcon />
             </IconButton>
-            <Dialog open={open} onClose={handleClose}>
+            <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xs">
                 <DialogTitle>New Training ({customer.name})</DialogTitle>
                 <DialogContent>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DatePicker
+                    <DateTimePicker
                         label="Date"
                         value={training.date}
-                        fullWidth
                         inputFormat="dd/MM/yyyy HH:mm"
                         mask="__/__/____ __:__"
                         onChange={(newValue) => {
                             setTraining({...training, date: newValue});
                         }}
-                        renderInput={(params) => <TextField variant='standard' {...params} />}
+                        renderInput={(params) => <TextField variant='standard' {...params} fullWidth />}
                     />
                     </LocalizationProvider>
                     <TextField

@@ -47,7 +47,7 @@ function Addcustomer({ addCustomer }) {
     return (
         <div>
             <Button variant="outlined" onClick={handleClickOpen}>
-                New Customers
+                New Customer
             </Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>New Customer</DialogTitle>

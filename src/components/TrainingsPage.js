@@ -46,16 +46,17 @@ function TrainingsPage() {
     };
 
     const columns = [
-        { field: 'activity', sortable: true, filter: true },
-        { field: 'duration', sortable: true, filter: true },
-        { field: 'date', sortable: true, filter: true, valueFormatter: params => dayjs(params.value).format("DD.MM.YY, HH:mm") },
+        { field: 'activity', sortable: true, filter: true, width: 150 },
+        { field: 'duration', sortable: true, filter: true, width: 140 },
+        { field: 'date', sortable: true, filter: true, width: 160 , valueFormatter: params => dayjs(params.value).format("DD.MM.YYYY HH:mm") },
         {
             headerName: 'Customer',
             valueGetter: customerName,
+            width: 160 ,
         },
         {
         headerName: '',
-        width: 100,
+        width: 90,
         field: 'links.0.href',
         cellRenderer: params => 
         <IconButton color="error" onClick={() => deleteTraining(params.data.id)}>

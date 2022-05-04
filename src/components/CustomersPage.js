@@ -109,26 +109,26 @@ function CustomersPage() {
     const columns = [
         { field: 'firstname', sortable: true, filter: true, width: 140 },
         { field: 'lastname', sortable: true, filter: true, width: 140 },
-        { field: 'email', sortable: true, filter: true },
-        { field: 'phone', sortable: true, filter: true },
-        { field: 'streetaddress', sortable: true, filter: true },
-        { field: 'postcode', sortable: true, filter: true, width: 110 },
+        { field: 'email', sortable: true, filter: true,  width: 180 },
+        { field: 'phone', sortable: true, filter: true,  width: 140},
+        { field: 'streetaddress', sortable: true, filter: true, width: 150 },
+        { field: 'postcode', sortable: true, filter: true, width: 120 },
         { field: 'city', sortable: true, filter: true, width: 110 },
         { 
             headerName: '',
-            width: 100,
+            width: 90,
             field: 'links.0.href',
             cellRenderer: params => <Addtraining addTraining={addTraining} params={params} />
         },
         {
             headerName: '',
-            width: 100,
+            width: 90,
             field: 'links.0.href',
             cellRenderer: params => <EditCustomer updateCustomer={updateCustomer} params={params} />
         },
         {
             headerName: '',
-            width: 100,
+            width: 90,
             field: 'links.0.href',
             cellRenderer: params => 
             <IconButton color="error" onClick={() => deleteCustomer(params.value)}>
