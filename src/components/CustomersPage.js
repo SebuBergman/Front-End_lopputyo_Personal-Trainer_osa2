@@ -5,6 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Snackbar from '@mui/material/Snackbar';
 import Addcustomer from './AddCustomer';
 import EditCustomer from './EditCustomer';
+import Addtraining from './AddTraining';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
@@ -39,17 +40,21 @@ function CustomersPage() {
             method: 'POST',
             headers: {'Content-type':'application/json'},
             body: JSON.stringify(customer)
-            })
-            .then(response => {
-            if (response.ok) {
-                fetchCustomers();
-            }
-            else {
-                alert('Something went wrong when adding car');
-            }
-            })
-            .catch(err => console.error(err))
-            }
+        })
+        .then(response => {
+        if (response.ok) {
+            fetchCustomers();
+        }
+        else {
+            alert('Something went wrong when adding car');
+        }
+        })
+        .catch(err => console.error(err))
+    }
+
+    const addTraining = training => {
+        fetch("https://customerrest.herokuapp.com/api/training")
+    }
 
     const updateCustomer = (updatedCustomer, link) => {
     fetch(link, {
@@ -78,6 +83,12 @@ function CustomersPage() {
         { field: 'streetaddress', sortable: true, filter: true },
         { field: 'postcode', sortable: true, filter: true, width: 110 },
         { field: 'city', sortable: true, filter: true, width: 110 },
+        { 
+            headerName: '',
+            width: 100,
+            field: 'links.0.href',
+            cellRenderer: params => <Addtraining addTraining={addTraining} params={params} />
+        },
         {
             headerName: '',
             width: 100,
@@ -90,7 +101,7 @@ function CustomersPage() {
             field: 'links.0.href',
             cellRenderer: params => 
             <IconButton color="error" onClick={() => deleteCustomer(params.value)}>
-            <DeleteIcon />
+                <DeleteIcon />
             </IconButton>
         }
     ]

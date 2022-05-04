@@ -4,12 +4,9 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Snackbar from '@mui/material/Snackbar';
 import dayjs from 'dayjs';
-import Addtraining from './AddTraining';
-
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
-
 
 function TrainingsPage() {
     const [trainings, setTrainings] = useState([]);
@@ -20,9 +17,9 @@ function TrainingsPage() {
     }, []);
 
     const fetchTrainings = () => {
-        fetch("https://customerrest.herokuapp.com/api/trainings")
+        fetch("https://customerrest.herokuapp.com/gettrainings")
         .then(response => response.json())
-        .then(data => setTrainings(data.content))
+        .then(data => setTrainings(data))
     }
 
     const deleteTraining = (link) => {
@@ -33,10 +30,19 @@ function TrainingsPage() {
        }
     }
 
+    const customerName = (params) => {
+        console.log(params);
+        return params.data.customer.firstname + " " + params.data.customer.lastname;
+    };
+
     const columns = [
         { field: 'date', sortable: true, filter: true, valueFormatter: params => dayjs(params.value).format("HH:mm, DD-MMM-YY") },
         { field: 'duration', sortable: true, filter: true },
         { field: 'activity', sortable: true, filter: true },
+        {
+            headerName: 'Customer',
+            valueGetter: customerName,
+        },
         {
         headerName: '',
         width: 100,
@@ -50,7 +56,6 @@ function TrainingsPage() {
 
     return (
         <>
-        <Addtraining addTraining={addTraining} />
         <div className="ag-theme-material" style={{ height: 600, width: '90%' }}>
             <AgGridReact
             columnDefs={columns}

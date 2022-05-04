@@ -1,5 +1,7 @@
 import React from 'react';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import AddIcon from '@mui/icons-material/Add';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -39,9 +41,9 @@ function Addtraining({ addTraining }) {
 
     return (
         <div>
-            <Button variant="outlined" onClick={handleClickOpen}>
-                New Training
-            </Button>
+            <IconButton onClick={handleClickOpen}>
+                <AddIcon />
+            </IconButton>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>New Training</DialogTitle>
                 <DialogContent>
