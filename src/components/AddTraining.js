@@ -17,19 +17,19 @@ function Addtraining({ addTraining, params }) {
         date: '',
         activity: '',
         duration: '',
-        customers: ''
+        customer: params.value
     })
-    
-    /*const [customername, setCustomername] = React.useState({
-        customers: params.data.customer.firstname
-    })*/
+
+    const [customer, setCustomer] = React.useState({
+        name: ''
+    })
 
     const handleClickOpen = () => {
         setOpen(true);
-        setTraining({
-            customers: params.data.firstname + " " + params.data.lastname
+        setCustomer({
+            name: params.data.firstname + " " + params.data.lastname
         })
-        console.log(params);
+        console.log(params.value);
     }
 
     const handleClose = () => {
@@ -37,12 +37,15 @@ function Addtraining({ addTraining, params }) {
     }
 
     const handleSave = () => {
+        console.log(params.value);
+        console.log(training);
         addTraining(training);
+        console.log(training);
         setTraining({
             date: '',
             activity: '',
             duration: '',
-            customers: ''
+            customer: ''
         })
     }
 
@@ -56,14 +59,15 @@ function Addtraining({ addTraining, params }) {
                 <AddIcon />
             </IconButton>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>New Training ({training.customers})</DialogTitle>
+                <DialogTitle>New Training ({customer.name})</DialogTitle>
                 <DialogContent>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DatePicker
                         label="Date"
                         value={training.date}
-                        inputFormat="dd.MM.yyyy"
-                        mask="__.__.____"
+                        fullWidth
+                        inputFormat="dd/MM/yyyy HH:mm"
+                        mask="__/__/____ __:__"
                         onChange={(newValue) => {
                             setTraining({...training, date: newValue});
                         }}
@@ -76,6 +80,7 @@ function Addtraining({ addTraining, params }) {
                         onChange={inputChanged}
                         margin="dense"
                         label="Activity"
+                        helperText="E.g. Jogging, Gym, Swimming"
                         fullWidth
                         variant="standard"
                     />
@@ -85,6 +90,7 @@ function Addtraining({ addTraining, params }) {
                         onChange={inputChanged}
                         margin="dense"
                         label="Duration"
+                        helperText="in minutes"
                         fullWidth
                         variant="standard"
                     />

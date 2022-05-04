@@ -27,12 +27,25 @@ function CustomersPage() {
         .catch(err => console.error(err))
     }
 
+    const fetchTrainings = () => {
+        fetch("https://customerrest.herokuapp.com/gettrainings")
+        .then(response => response.json())
+    }
+
     const deleteCustomer = (link) => {
-        if (window.confirm('Are you sure?')){
+        if (window.confirm("Are you sure you want to delete this customer?")) {
         fetch(link, {method: 'DELETE'})
-        .then(res => fetchCustomers())
-        .catch(err => console.error(err))
-       }
+        .then(response => {
+            if (response.ok) {
+                setMsg("Customer deleted successfully");
+                setOpen(true);
+                fetchCustomers();
+            }
+            else {
+                alert("Something went wrong!");
+            }
+        })
+        }
     }
 
     const addCustomer = (customer) => {
@@ -43,17 +56,34 @@ function CustomersPage() {
         })
         .then(response => {
         if (response.ok) {
+            setMsg('Customer added successfully');
+            setOpen(true);
             fetchCustomers();
         }
         else {
-            alert('Something went wrong when adding car');
+            alert('Something went wrong when adding a customer!');
         }
         })
         .catch(err => console.error(err))
     }
 
     const addTraining = training => {
-        fetch("https://customerrest.herokuapp.com/api/training")
+        fetch("https://customerrest.herokuapp.com/api/trainings",{
+            method: "POST",
+            headers: {'Content-type':'application/json'},
+            body: JSON.stringify(training)
+        })
+        .then(response => {
+        if (response.ok) {
+            setMsg("Training was added succesfully");
+            setOpen(true);
+            fetchCustomers();
+        }
+        else {
+            alert("Something went wrong with adding a training!")
+        }
+        })
+        .catch(err => console.error(err))
         
     }
 
@@ -65,12 +95,12 @@ function CustomersPage() {
     })
     .then(response => {
       if (response.ok) {
-        setMsg('Car edited succesfully');
+        setMsg("Customer edited succesfully");
         setOpen(true);
         fetchCustomers();
       }
       else {
-        alert('Something went wrong!');
+        alert("Something went wrong with updating customer details!");
       }
     })
     .catch(err => console.error(err))
@@ -121,7 +151,7 @@ function CustomersPage() {
         </div>
         <Snackbar
             open={open}
-            message="Car deleted"
+            message={msg}
             autoHideDuration={3000}
             onClose={() => setOpen(false)}
         />

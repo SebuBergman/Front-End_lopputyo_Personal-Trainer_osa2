@@ -11,6 +11,7 @@ import 'ag-grid-community/dist/styles/ag-theme-material.css';
 function TrainingsPage() {
     const [trainings, setTrainings] = useState([]);
     const [open, setOpen] = useState(false);
+    const [msg, setMsg] = useState('');
 
     useEffect(() => {
         fetchTrainings();
@@ -20,17 +21,27 @@ function TrainingsPage() {
         fetch("https://customerrest.herokuapp.com/gettrainings")
         .then(response => response.json())
         .then(data => setTrainings(data))
+        .catch(err => console.error(err))
     }
 
-    const deleteTraining = (link) => {
-        if (window.confirm('Are you sure?')){
-        fetch(link, {method: 'DELETE'})
-        .then(res => fetchTrainings())
-        .catch(err => console.error(err))
-       }
+    const deleteTraining = (id) => {
+        if (window.confirm('Are you sure?')) {
+        fetch("https://customerrest.herokuapp.com/api/trainings/" + id, {method: 'DELETE'})
+        .then(response => {
+            if (response.ok) {
+                setMsg("Training was deleted successfully");
+                setOpen(true);
+                fetchTrainings();
+            }
+            else {
+                alert("Something went wrong!")
+            }
+        })
+        }
     }
 
     const customerName = (params) => {
+        console.log(params);
         return params.data.customer.firstname + " " + params.data.customer.lastname;
     };
 
@@ -47,7 +58,7 @@ function TrainingsPage() {
         width: 100,
         field: 'links.0.href',
         cellRenderer: params => 
-        <IconButton color="error" onClick={() => deleteTraining(params.value)}>
+        <IconButton color="error" onClick={() => deleteTraining(params.data.id)}>
           <DeleteIcon />
         </IconButton>
         }
@@ -66,7 +77,7 @@ function TrainingsPage() {
         </div>
         <Snackbar
             open={open}
-            message="Training deleted"
+            message={msg}
             autoHideDuration={3000}
             onClose={() => setOpen(false)}
         />
